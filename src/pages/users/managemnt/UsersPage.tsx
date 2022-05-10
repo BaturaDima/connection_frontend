@@ -1,9 +1,10 @@
 import { MainLayout } from '../../../layouts/MainLayout';
 
 import React, { useEffect, useState } from 'react';
-import { Result, Table, Tag } from 'antd';
+import { Table, Tag } from 'antd';
 import { User } from './models/user.interface';
 import { DriverApplication } from './models/driver-application.interface';
+import NetworkErrorResult from '../../../components/network-error-result/NetworkErrorResult';
 
 const UsersPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -18,7 +19,7 @@ const UsersPage: React.FC = () => {
         fetch('/driver-application/not-approved'),
       ]);
 
-      if (responses.some(response => !response.ok)) {
+      if (responses.some((response) => !response.ok)) {
         setError(true);
         return;
       }
@@ -46,7 +47,7 @@ const UsersPage: React.FC = () => {
   };
 
   const renderDriverApplicationsTags = () => (
-    <Tag color='orange' key='Approve'>
+    <Tag color="orange" key="Approve">
       Not Approved
     </Tag>
   );
@@ -174,10 +175,7 @@ const UsersPage: React.FC = () => {
         columns={userColumns}
         dataSource={users}
       />
-      {hasError && <Result
-        status='warning'
-        title='There are some problems with your operation.'
-      />}
+      {hasError && <NetworkErrorResult />}
     </MainLayout>
   );
 };

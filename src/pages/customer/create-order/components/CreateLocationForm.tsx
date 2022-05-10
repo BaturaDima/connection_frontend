@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
-import { Button, Form, FormInstance, InputNumber, Space } from 'antd';
+import { Button, Form, FormInstance, InputNumber, message, Space } from 'antd';
 import DropDownWIthInput from '../../../../components/dropdown-with-input/DropDownWIthInput';
 import { GeoLocation } from '../../../orders/management/models/location.interface';
+import { Street } from '../../../orders/management/models/street.interface';
+import { City } from '../../../orders/management/models/city.interface';
 
 interface CreateLocationFormState {
   cityFrom: string | undefined;
@@ -18,24 +20,31 @@ interface CreateLocationFormProps {
   setToLocation: (val: GeoLocation) => void;
   fromLocation: GeoLocation | undefined;
   toLocation: GeoLocation | undefined;
+  streets: Street[];
+  cities: City[];
 }
 
 const CreateLocationForm: React.FC<CreateLocationFormProps> = ({
-                                                                 next,
-                                                                 setFromLocation,
-                                                                 setToLocation,
-                                                                 fromLocation,
-                                                                 toLocation,
-                                                               }) => {
+  streets,
+  cities,
+  next,
+  setFromLocation,
+  setToLocation,
+  fromLocation,
+  toLocation,
+}) => {
   const formRef = React.createRef<FormInstance>();
-  const formValues = useMemo<CreateLocationFormState>(() => ({
-    streetFrom: fromLocation?.street.name,
-    streetTo: toLocation?.street.name,
-    cityFrom: fromLocation?.city.name,
-    cityTo: toLocation?.city.name,
-    homeFrom: fromLocation?.home,
-    homeTo: toLocation?.home,
-  }), []);
+  const formValues = useMemo<CreateLocationFormState>(
+    () => ({
+      streetFrom: fromLocation?.street.name,
+      streetTo: toLocation?.street.name,
+      cityFrom: fromLocation?.city.name,
+      cityTo: toLocation?.city.name,
+      homeFrom: fromLocation?.home,
+      homeTo: toLocation?.home,
+    }),
+    [],
+  );
 
   const onStreetChange = (key: 'streetTo' | 'streetFrom', street: string) => {
     formRef.current?.setFieldsValue({ [key]: street });
@@ -46,7 +55,7 @@ const CreateLocationForm: React.FC<CreateLocationFormProps> = ({
   };
 
   const onFinish = (state: CreateLocationFormState) => {
-    setToLocation({
+    const toLocation = {
       home: state.homeTo!,
       street: {
         name: state.streetTo!,
@@ -54,8 +63,8 @@ const CreateLocationForm: React.FC<CreateLocationFormProps> = ({
       city: {
         name: state.cityTo!,
       },
-    });
-    setFromLocation({
+    };
+    const fromLocation = {
       home: state.homeFrom!,
       street: {
         name: state.streetFrom!,
@@ -63,7 +72,14 @@ const CreateLocationForm: React.FC<CreateLocationFormProps> = ({
       city: {
         name: state.cityFrom!,
       },
-    });
+    };
+    if (JSON.stringify(toLocation) === JSON.stringify(fromLocation)) {
+      message.error('Locations must not be the same.');
+      return;
+    }
+
+    setToLocation(toLocation);
+    setFromLocation(fromLocation);
     next();
   };
 
@@ -74,77 +90,85 @@ const CreateLocationForm: React.FC<CreateLocationFormProps> = ({
         initialValues={formValues}
         layout={'vertical'}
         ref={formRef}
-        name='basic'
+        name="basic"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         onFinish={onFinish}
-        autoComplete='off'
+        autoComplete="off"
         style={{ display: 'flex', flexDirection: 'column' }}
       >
         <Space>
           <Form.Item
             label={'Source'}
-            name='cityFrom'
+            name="cityFrom"
             rules={[{ required: true, message: 'Missing source city' }]}
           >
-            <DropDownWIthInput onChange={city => onCityChange('cityFrom', city)}
-                               placeholder='City Name'
-                               options={[]}
-                               defaultValue={formValues.cityFrom} />
+            <DropDownWIthInput
+              onChange={(city) => onCityChange('cityFrom', city)}
+              placeholder="City Name"
+              options={cities.map((city) => city.name)}
+              defaultValue={formValues.cityFrom}
+            />
           </Form.Item>
 
           <Form.Item
             label={'Destination'}
-            name='cityTo'
+            name="cityTo"
             rules={[{ required: true, message: 'Missing destination city' }]}
           >
-            <DropDownWIthInput onChange={city => onCityChange('cityTo', city)}
-                               placeholder='City Name'
-                               options={[]}
-                               defaultValue={formValues.cityTo} />
+            <DropDownWIthInput
+              onChange={(city) => onCityChange('cityTo', city)}
+              placeholder="City Name"
+              options={cities.map((city) => city.name)}
+              defaultValue={formValues.cityTo}
+            />
           </Form.Item>
         </Space>
 
         <Space>
           <Form.Item
-            name='streetFrom'
+            name="streetFrom"
             rules={[{ required: true, message: 'Missing source street' }]}
           >
-            <DropDownWIthInput onChange={street => onStreetChange('streetFrom', street)}
-                               placeholder='Street Name'
-                               options={[]}
-                               defaultValue={formValues.streetFrom} />
+            <DropDownWIthInput
+              onChange={(street) => onStreetChange('streetFrom', street)}
+              placeholder="Street Name"
+              options={streets.map((street) => street.name)}
+              defaultValue={formValues.streetFrom}
+            />
           </Form.Item>
 
           <Form.Item
-            name='streetTo'
+            name="streetTo"
             rules={[{ required: true, message: 'Missing destination street!' }]}
           >
-            <DropDownWIthInput onChange={street => onStreetChange('streetTo', street)}
-                               placeholder='Street Name'
-                               options={[]}
-                               defaultValue={formValues.streetTo} />
+            <DropDownWIthInput
+              onChange={(street) => onStreetChange('streetTo', street)}
+              placeholder="Street Name"
+              options={streets.map((street) => street.name)}
+              defaultValue={formValues.streetTo}
+            />
           </Form.Item>
         </Space>
 
         <Space align={'center'} size={'large'}>
           <Form.Item
-            name='homeFrom'
+            name="homeFrom"
             rules={[{ required: true, message: 'Missing home' }]}
           >
-            <InputNumber placeholder='Home' min={0} />
+            <InputNumber placeholder="Home" min={0} />
           </Form.Item>
 
           <Form.Item
-            name='homeTo'
+            name="homeTo"
             rules={[{ required: true, message: 'Missing home' }]}
           >
-            <InputNumber placeholder='Home' min={0} />
+            <InputNumber placeholder="Home" min={0} />
           </Form.Item>
         </Space>
 
         <Form.Item>
-          <Button style={{ marginTop: '5px' }} type='primary' htmlType='submit'>
+          <Button style={{ marginTop: '5px' }} type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>

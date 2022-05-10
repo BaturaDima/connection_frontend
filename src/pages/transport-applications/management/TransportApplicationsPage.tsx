@@ -1,19 +1,20 @@
 import React from 'react';
 import { MainLayout } from '../../../layouts/MainLayout';
-import { Button, notification, Result, Space, Table } from 'antd';
+import { Button, notification, Space, Table } from 'antd';
 import { User } from '../../users/managemnt/models/user.interface';
 import { TransportApplication } from './models/transport-application.interface';
-import { CheckCircleOutlined, CloseCircleOutlined, DownloadOutlined } from '@ant-design/icons';
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  DownloadOutlined,
+} from '@ant-design/icons';
 import useFetching from '../../../hooks/useFetch';
+import NetworkErrorResult from '../../../components/network-error-result/NetworkErrorResult';
 
 const TransportApplicationsPage: React.FC = () => {
-  const {
-    data,
-    isLoading,
-    hasError,
-    setData,
-    setLoading,
-  } = useFetching<TransportApplication[]>('/transport-application/pending', []);
+  const { data, isLoading, hasError, setData, setLoading } = useFetching<
+    TransportApplication[]
+  >('/transport-application/pending', []);
 
   const onApprove = async (id: number) => {
     const response = await updateStatus(`/transport-application/${id}/approve`);
@@ -45,17 +46,7 @@ const TransportApplicationsPage: React.FC = () => {
     setData([...data.slice(0, index), ...data.slice(index + 1)]);
   };
 
-  const onOpenDocument = async (documentPublicId: string) => {
-    const response = await fetch(`/transport-application/document?documentPublicId=${documentPublicId}`);
-    const blob = await response.blob();
-    const objectURL = URL.createObjectURL(new Blob([blob]));
-    const link = document.createElement('a');
-    link.href = objectURL;
-    link.setAttribute('download', `document.pdf`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+
 
   const renderActions = (id: number) => (
     <Space size={'large'}>
@@ -64,11 +55,6 @@ const TransportApplicationsPage: React.FC = () => {
     </Space>
   );
 
-  const renderDocuments = (documentUid: string) => (
-    <Button onClick={() => onOpenDocument(documentUid)} type='primary' shape='round' icon={<DownloadOutlined />}>
-      Download
-    </Button>
-  );
 
   const openNotification = (text: string, icon: JSX.Element) =>
     notification.info({
@@ -86,12 +72,6 @@ const TransportApplicationsPage: React.FC = () => {
       render: ({ firstName, lastName }: User) => (
         <a>{`${firstName} ${lastName}`}</a>
       ),
-    },
-    {
-      title: 'Document',
-      key: 'document',
-      dataIndex: 'documentPublicId',
-      render: renderDocuments,
     },
     {
       title: 'Actions',
@@ -115,10 +95,7 @@ const TransportApplicationsPage: React.FC = () => {
           }))}
         />
       )}
-      {hasError && <Result
-        status='warning'
-        title='There are some problems with your operation.'
-      />}
+      {hasError && <NetworkErrorResult />}
     </MainLayout>
   );
 };

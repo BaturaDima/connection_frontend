@@ -1,11 +1,12 @@
 import React from 'react';
 import { MainLayout } from '../../../layouts/MainLayout';
-import { notification, Result, Table } from 'antd';
+import { notification, Table } from 'antd';
 import { CheckCircleOutlined } from '@ant-design/icons';
 import { Order } from './models/order.interface';
 import { GeoLocation } from './models/location.interface';
 import useFetching from '../../../hooks/useFetch';
 import { User } from '../../users/managemnt/models/user.interface';
+import NetworkErrorResult from '../../../components/network-error-result/NetworkErrorResult';
 
 const OrdersPage: React.FC = () => {
   const { data, isLoading, hasError, setData, setLoading } = useFetching<
@@ -108,10 +109,7 @@ const OrdersPage: React.FC = () => {
           }))}
         />
       )}
-      {hasError &&  <Result
-        status="warning"
-        title="There are some problems with your operation."
-      />}
+      {hasError && <NetworkErrorResult />}
     </MainLayout>
   );
 };

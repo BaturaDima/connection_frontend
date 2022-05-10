@@ -7,11 +7,16 @@ const { Option } = Select;
 interface DropDownWithInputProps {
   placeholder: string;
   onChange: (item: string) => void;
-  options: string[],
-  defaultValue: string | undefined
+  options: string[];
+  defaultValue: string | undefined;
 }
 
-const DropDownWithInput: React.FC<DropDownWithInputProps> = ({ placeholder, onChange, options, defaultValue }) => {
+const DropDownWithInput: React.FC<DropDownWithInputProps> = ({
+  placeholder,
+  onChange,
+  options,
+  defaultValue,
+}) => {
   const [items, setItems] = useState<string[]>(options);
   const [name, setName] = useState('');
 
@@ -21,7 +26,7 @@ const DropDownWithInput: React.FC<DropDownWithInputProps> = ({ placeholder, onCh
 
   const addItem = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.preventDefault();
-    const index = items.findIndex(item => item === name);
+    const index = items.findIndex((item) => item === name);
     if (index === -1) {
       setItems([...items, name]);
       setName('');
@@ -34,12 +39,16 @@ const DropDownWithInput: React.FC<DropDownWithInputProps> = ({ placeholder, onCh
       onChange={onChange}
       style={{ width: 300 }}
       placeholder={placeholder}
-      dropdownRender={menu => (
+      dropdownRender={(menu) => (
         <>
           {menu}
           <Divider style={{ margin: '8px 0' }} />
-          <Space align='center' style={{ padding: '0 8px 4px' }}>
-            <Input placeholder='Please enter item' value={name} onChange={onNameChange} />
+          <Space align="center" style={{ padding: '0 8px 4px' }}>
+            <Input
+              placeholder="Please enter item"
+              value={name}
+              onChange={onNameChange}
+            />
             <Typography.Link onClick={addItem} style={{ whiteSpace: 'nowrap' }}>
               <PlusOutlined /> Add item
             </Typography.Link>
@@ -47,8 +56,10 @@ const DropDownWithInput: React.FC<DropDownWithInputProps> = ({ placeholder, onCh
         </>
       )}
     >
-      {items.map(item => (
-        <Option value={item} key={item}>{item}</Option>
+      {items.map((item) => (
+        <Option value={item} key={item}>
+          {item}
+        </Option>
       ))}
     </Select>
   );

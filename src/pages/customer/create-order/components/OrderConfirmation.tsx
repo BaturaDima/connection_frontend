@@ -9,7 +9,11 @@ interface OrderConfirmationProps {
   toLocation: GeoLocation | undefined;
 }
 
-const OrderConfirmation: React.FC<OrderConfirmationProps> = ({ cargos, fromLocation, toLocation }) => {
+const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
+  cargos,
+  fromLocation,
+  toLocation,
+}) => {
   const cargoColumns = [
     {
       title: 'Name',
@@ -38,17 +42,35 @@ const OrderConfirmation: React.FC<OrderConfirmationProps> = ({ cargos, fromLocat
     },
   ];
 
-  return (<>
-    <Descriptions title='Order Info' layout='vertical' bordered>
-      <Descriptions.Item label='Source City'>{fromLocation?.city.name}</Descriptions.Item>
-      <Descriptions.Item label='Source Street'>{fromLocation?.street.name}</Descriptions.Item>
-      <Descriptions.Item label='Source Home'>{fromLocation?.home}</Descriptions.Item>
-      <Descriptions.Item label='Source City'>{toLocation?.city.name}</Descriptions.Item>
-      <Descriptions.Item label='Source Street'>{toLocation?.street.name}</Descriptions.Item>
-      <Descriptions.Item label='Source Home'>{toLocation?.home}</Descriptions.Item>
-    </Descriptions>
-    <Table title={() => 'Order Cargos'} columns={cargoColumns} dataSource={cargos} />
-  </>);
+  return (
+    <>
+      <Descriptions title="Order Info" layout="vertical" bordered>
+        <Descriptions.Item label="Source City">
+          {fromLocation?.city.name}
+        </Descriptions.Item>
+        <Descriptions.Item label="Source Street">
+          {fromLocation?.street.name}
+        </Descriptions.Item>
+        <Descriptions.Item label="Source Home">
+          {fromLocation?.home}
+        </Descriptions.Item>
+        <Descriptions.Item label="Source City">
+          {toLocation?.city.name}
+        </Descriptions.Item>
+        <Descriptions.Item label="Source Street">
+          {toLocation?.street.name}
+        </Descriptions.Item>
+        <Descriptions.Item label="Source Home">
+          {toLocation?.home}
+        </Descriptions.Item>
+      </Descriptions>
+      <Table
+        title={() => 'Order Cargos'}
+        columns={cargoColumns}
+        dataSource={cargos}
+      />
+    </>
+  );
 };
 
 export default OrderConfirmation;
