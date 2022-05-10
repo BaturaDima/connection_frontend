@@ -4,7 +4,7 @@ import { Loading } from '../features/shared/loading';
 import { AppRoutes } from './routes.enum';
 
 const UsersPage = lazy(() => import('../pages/users/managemnt/UsersPage'));
-const OrdersPage = lazy(() => import('../features/orders/OrdersPage'));
+const OrdersPage = lazy(() => import('../features/orders/PendingOrdersPage'));
 const TransportApplicationsPage = lazy(
   () =>
     import(

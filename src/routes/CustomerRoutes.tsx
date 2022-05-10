@@ -4,7 +4,7 @@ import { Loading } from '../features/shared/loading';
 import { AppRoutes } from './routes.enum';
 
 const CreateOrderPage = lazy(
-  () => import('../pages/customer/create-order/CreateOrderPage'),
+  () => import('../features/orders/CreateOrderPage'),
 );
 
 export const CustomerRoutes: React.FC = () => (

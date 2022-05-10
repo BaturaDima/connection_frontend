@@ -1,5 +1,6 @@
 import { apiSlice } from '../api/apiSlice';
 import { Order } from './models/order.interface';
+import { CreateOrderDto } from './models/create-order-dto.interface';
 
 const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -29,6 +30,15 @@ const extendedApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: (result, error, arg) =>
         error ? [] : [{ type: 'Order' as const, id: arg }],
     }),
+    createOrder: builder.mutation<Order, CreateOrderDto>({
+      query: (order) => ({
+        url: '/order',
+        method: 'POST',
+        body: order,
+      }),
+      invalidatesTags: (result, error) =>
+        error ? [] : [{ type: 'Order' as const, id: 'LIST' }],
+    }),
   }),
 });
 
@@ -36,4 +46,5 @@ export const {
   useGetPendingOrdersQuery,
   useApproveOrderMutation,
   useDeclineOrderMutation,
+  useCreateOrderMutation,
 } = extendedApiSlice;
