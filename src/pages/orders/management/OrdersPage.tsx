@@ -35,7 +35,7 @@ const OrdersPage: React.FC = () => {
 
   const approveOrder = async (id: number) => {
     setLoading(true);
-    const response = await fetch(`order/${id}/approve`, {
+    const response = await fetch(`/order/${id}/approve`, {
       method: 'PUT',
     });
     setLoading(false);
