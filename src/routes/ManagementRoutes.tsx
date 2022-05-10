@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import React, { lazy, Suspense } from 'react';
-import { Loading } from '../components/loading';
+import { Loading } from '../features/shared/loading';
 import { AppRoutes } from './routes.enum';
 
 const UsersPage = lazy(() => import('../pages/users/managemnt/UsersPage'));
-const OrdersPage = lazy(() => import('../pages/orders/management/OrdersPage'));
+const OrdersPage = lazy(() => import('../features/orders/OrdersPage'));
 const TransportApplicationsPage = lazy(
   () =>
     import(

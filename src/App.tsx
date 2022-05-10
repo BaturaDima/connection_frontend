@@ -1,5 +1,12 @@
-import React from 'react';
+import React, { VFC } from 'react';
 import './App.css';
 import { IndexRoutes } from './routes';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-export const App: React.FC = () => <IndexRoutes />;
+const App: VFC = () => (
+  <Router>
+    <IndexRoutes />
+  </Router>
+);
+
+export default App;

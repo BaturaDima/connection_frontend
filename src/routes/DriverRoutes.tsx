@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoutes } from './routes.enum';
-import { Loading } from '../components/loading';
+import { Loading } from '../features/shared/loading';
 
 const CreateTransportApplicationPage = lazy(
   () =>

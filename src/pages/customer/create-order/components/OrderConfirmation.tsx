@@ -1,7 +1,6 @@
 import React from 'react';
 import { Cargo } from './CreateCargoForm';
-import { GeoLocation } from '../../../orders/management/models/location.interface';
-import { Descriptions, Table } from 'antd';
+import { GeoLocation } from '../../../../features/orders/models/location.interface';import { Descriptions, Table } from 'antd';
 
 interface OrderConfirmationProps {
   cargos: Cargo[];

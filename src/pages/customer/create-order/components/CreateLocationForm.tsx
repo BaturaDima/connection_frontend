@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { Button, Form, FormInstance, InputNumber, message, Space } from 'antd';
-import DropDownWIthInput from '../../../../components/dropdown-with-input/DropDownWIthInput';
-import { GeoLocation } from '../../../orders/management/models/location.interface';
-import { Street } from '../../../orders/management/models/street.interface';
-import { City } from '../../../orders/management/models/city.interface';
+import DropDownWIthInput from '../../../../features/shared/dropdown-with-input/DropDownWIthInput';
+import { GeoLocation } from '../../../../features/orders/models/location.interface';
+import { Street } from '../../../../features/orders/models/street.interface';
+import { City } from '../../../../features/orders/models/city.interface';
 
 interface CreateLocationFormState {
   cityFrom: string | undefined;

@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import React, { lazy, Suspense } from 'react';
-import { Loading } from '../components/loading';
+import { Loading } from '../features/shared/loading';
 import { AppRoutes } from './routes.enum';
 
 const CreateOrderPage = lazy(

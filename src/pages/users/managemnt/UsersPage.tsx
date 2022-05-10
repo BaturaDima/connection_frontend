@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Tag } from 'antd';
 import { User } from './models/user.interface';
 import { DriverApplication } from './models/driver-application.interface';
-import NetworkErrorResult from '../../../components/network-error-result/NetworkErrorResult';
+import NetworkErrorResult from '../../../features/shared/network-error-result/NetworkErrorResult';
 
 const UsersPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
