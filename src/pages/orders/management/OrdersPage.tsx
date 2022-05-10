@@ -11,7 +11,7 @@ import NetworkErrorResult from '../../../components/network-error-result/Network
 const OrdersPage: React.FC = () => {
   const { data, isLoading, hasError, setData, setLoading } = useFetching<
     Order[]
-  >('/order/not-approved', []);
+    >('/order/pending', []);
 
   const renderUser = ({ firstName, lastName }: User) => (
     <a>{`${firstName} ${lastName}`}</a>

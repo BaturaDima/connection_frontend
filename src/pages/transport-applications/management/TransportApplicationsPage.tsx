@@ -25,8 +25,7 @@ const TransportApplicationsPage: React.FC = () => {
   };
 
   const onReject = async (id: number) => {
-    const response = await updateStatus(`/transport-application/${id}/reject`);
-    if (!response.ok) return;
+    const response = await updateStatus(`/transport-application/${id}/decline`);    if (!response.ok) return;
 
     removeApplication(id);
     openNotification('Rejected!', <CloseCircleOutlined />);

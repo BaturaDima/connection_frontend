@@ -16,7 +16,7 @@ const UsersPage: React.FC = () => {
     const fetchUsers = async () => {
       const responses = await Promise.all([
         fetch('/user'),
-        fetch('/driver-application/not-approved'),
+        fetch('/driver-application/pending'),
       ]);
 
       if (responses.some((response) => !response.ok)) {
