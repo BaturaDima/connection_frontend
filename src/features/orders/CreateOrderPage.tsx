@@ -1,5 +1,5 @@
 import React, { useState, VFC } from 'react';
-import { MainLayout } from '../../layouts/MainLayout';
+import { MainLayout } from '../layouts/MainLayout';
 import { Button, message, Steps } from 'antd';
 import './CreateOrdersPage.css';
 import CreateCargoForm from './CreateCargoForm';
@@ -14,7 +14,7 @@ import {
 } from '../locations/locationsSlice';
 import { useCreateOrderMutation } from './ordersSlice';
 import { CreateOrderDto } from './models/create-order-dto.interface';
-import { openNotification } from '../../util/notification';
+import { openNotification } from '../util/notification';
 import { CheckCircleOutlined } from '@ant-design/icons';
 import { Cargo } from './models/cargo.interface';
 

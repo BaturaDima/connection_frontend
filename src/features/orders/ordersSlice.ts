@@ -20,7 +20,7 @@ const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
       }),
       invalidatesTags: (result, error, arg) =>
-        error ? [] : [{ type: 'Order' as const, id: arg }],
+          error ? [] : [{ type: 'Order' as const, id: arg }],
     }),
     declineOrder: builder.mutation<Order, number>({
       query: (id) => ({
@@ -28,7 +28,7 @@ const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
       }),
       invalidatesTags: (result, error, arg) =>
-        error ? [] : [{ type: 'Order' as const, id: arg }],
+          error ? [] : [{ type: 'Order' as const, id: arg }],
     }),
     createOrder: builder.mutation<Order, CreateOrderDto>({
       query: (order) => ({
@@ -37,7 +37,13 @@ const extendedApiSlice = apiSlice.injectEndpoints({
         body: order,
       }),
       invalidatesTags: (result, error) =>
-        error ? [] : [{ type: 'Order' as const, id: 'LIST' }],
+          error
+              ? []
+              : [
+                { type: 'Order' as const, id: 'LIST' },
+                { type: 'Street' as const },
+                { type: 'City' as const },
+              ],
     }),
   }),
 });

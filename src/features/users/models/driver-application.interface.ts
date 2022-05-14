@@ -4,4 +4,5 @@ export interface DriverApplication {
   lastName: string;
   email: string;
   isApplicationApproved: boolean;
+  updatedAt: string;
 }

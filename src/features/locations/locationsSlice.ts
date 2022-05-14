@@ -6,11 +6,11 @@ const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCities: builder.query<City[], void>({
       query: () => '/location/cities',
-      providesTags: [],
+      providesTags: [{ type: 'City' as const, id: 'LIST' }],
     }),
     getStreets: builder.query<Street[], void>({
       query: () => '/location/streets',
-      providesTags: [],
+      providesTags: [{ type: 'Street' as const, id: 'LIST' }],
     }),
   }),
 });

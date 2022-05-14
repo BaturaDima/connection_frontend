@@ -1,12 +1,12 @@
-import { User } from '../../../pages/users/managemnt/models/user.interface';
-import React, { VFC } from 'react';
+import { User } from '../../users/models/user.interface';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 type UserLinkProps = {
   user: User;
 };
 
-const UserLink: VFC<UserLinkProps> = ({ user }) => {
+const UserLink = ({ user }: UserLinkProps) => {
   const navigate = useNavigate();
 
   const onLinkClicked = () => {

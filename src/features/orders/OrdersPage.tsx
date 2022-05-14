@@ -1,9 +1,9 @@
 import React, { useMemo, VFC } from 'react';
-import { MainLayout } from '../../layouts/MainLayout';
+import { MainLayout } from '../layouts/MainLayout';
 import { message, Table, Typography } from 'antd';
 import { CheckCircleOutlined } from '@ant-design/icons';
 import { GeoLocation } from '../../pages/orders/management/models/location.interface';
-import { User } from '../../pages/users/managemnt/models/user.interface';
+import { User } from '../users/models/user.interface';
 import NetworkErrorResult from '../shared/network-error-result/NetworkErrorResult';
 import {
   useApproveOrderMutation,

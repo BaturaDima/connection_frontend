@@ -1,4 +1,4 @@
-import { User } from '../../../users/managemnt/models/user.interface';
+import { User } from '../../../../features/users/models/user.interface';
 
 export interface TransportApplication {
   id: number;

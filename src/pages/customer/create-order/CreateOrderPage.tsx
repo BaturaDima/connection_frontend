@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MainLayout } from '../../../layouts/MainLayout';
+import { MainLayout } from '../../../features/layouts/MainLayout';
 import { Button, message, Steps } from 'antd';
 import './CreateOrdersPage.css';
 import CreateCargoForm, { Cargo } from './components/CreateCargoForm';

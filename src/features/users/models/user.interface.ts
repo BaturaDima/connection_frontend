@@ -4,4 +4,5 @@ export interface User {
   lastName: string;
   email: string;
   isActive: boolean;
+  updatedAt: string;
 }

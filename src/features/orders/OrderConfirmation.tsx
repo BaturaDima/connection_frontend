@@ -9,11 +9,11 @@ interface OrderConfirmationProps {
   toLocation: GeoLocation | undefined;
 }
 
-const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
-  cargos,
-  fromLocation,
-  toLocation,
-}) => {
+const OrderConfirmation = ({
+                             cargos,
+                             fromLocation,
+                             toLocation,
+                           }: OrderConfirmationProps) => {
   const cargoColumns = [
     {
       title: 'Name',
@@ -43,39 +43,39 @@ const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
   ];
 
   return (
-    <>
-      <Typography.Title style={{ padding: '16px' }} level={3}>
-        Order Information
-      </Typography.Title>
-      <Descriptions layout="horizontal" bordered>
-        <Descriptions.Item label="Source City">
-          {fromLocation?.city.name}
-        </Descriptions.Item>
-        <Descriptions.Item label="Source Street">
-          {fromLocation?.street.name}
-        </Descriptions.Item>
-        <Descriptions.Item label="Source Home">
-          {fromLocation?.home}
-        </Descriptions.Item>
-        <Descriptions.Item label="Destination City">
-          {toLocation?.city.name}
-        </Descriptions.Item>
-        <Descriptions.Item label="Destination Street">
-          {toLocation?.street.name}
-        </Descriptions.Item>
-        <Descriptions.Item label="Destination Home">
-          {toLocation?.home}
-        </Descriptions.Item>
-      </Descriptions>
-      <Table
-        title={() => (
-          <Typography.Title level={3}>Order Cargos</Typography.Title>
-        )}
-        pagination={{ pageSize: 3 }}
-        columns={cargoColumns}
-        dataSource={cargos}
-      />
-    </>
+      <>
+        <Typography.Title style={{ padding: '16px' }} level={3}>
+          Order Information
+        </Typography.Title>
+        <Descriptions layout="horizontal" bordered>
+          <Descriptions.Item label="Source City">
+            {fromLocation?.city.name}
+          </Descriptions.Item>
+          <Descriptions.Item label="Source Street">
+            {fromLocation?.street.name}
+          </Descriptions.Item>
+          <Descriptions.Item label="Source Home">
+            {fromLocation?.home}
+          </Descriptions.Item>
+          <Descriptions.Item label="Destination City">
+            {toLocation?.city.name}
+          </Descriptions.Item>
+          <Descriptions.Item label="Destination Street">
+            {toLocation?.street.name}
+          </Descriptions.Item>
+          <Descriptions.Item label="Destination Home">
+            {toLocation?.home}
+          </Descriptions.Item>
+        </Descriptions>
+        <Table
+            title={() => (
+                <Typography.Title level={3}>Order Cargos</Typography.Title>
+            )}
+            pagination={{ pageSize: 3 }}
+            columns={cargoColumns}
+            dataSource={cargos}
+        />
+      </>
   );
 };
 

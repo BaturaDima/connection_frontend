@@ -11,12 +11,12 @@ interface DropDownWithInputProps {
   defaultValue: string | undefined;
 }
 
-const DropDownWithInput: React.FC<DropDownWithInputProps> = ({
+const DropDownWithInput = ({
   placeholder,
   onChange,
   options,
   defaultValue,
-}) => {
+}: DropDownWithInputProps) => {
   const [items, setItems] = useState<string[]>(options);
   const [name, setName] = useState('');
 

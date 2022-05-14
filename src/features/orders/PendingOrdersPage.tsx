@@ -1,9 +1,9 @@
-import React, { useMemo, VFC } from 'react';
-import { MainLayout } from '../../layouts/MainLayout';
+import React, { VFC } from 'react';
+import { MainLayout } from '../layouts/MainLayout';
 import { message, Table, Typography } from 'antd';
 import { CheckCircleOutlined } from '@ant-design/icons';
 import { GeoLocation } from './models/location.interface';
-import { User } from '../../pages/users/managemnt/models/user.interface';
+import { User } from '../users/models/user.interface';
 import NetworkErrorResult from '../shared/network-error-result/NetworkErrorResult';
 import {
   useApproveOrderMutation,
@@ -11,9 +11,11 @@ import {
   useGetPendingOrdersQuery,
 } from './ordersSlice';
 import { formatDistanceToNow } from 'date-fns';
-import { openNotification } from '../../util/notification';
+import { openNotification } from '../util/notification';
 import ApproveAndDeclineActions from '../shared/approve-and-decline-actions/ApproveAndDeclineActions';
 import UserLink from '../shared/user-link/UserLink';
+import useSortedByTime from '../hooks/useSortedByTime';
+import { Order } from './models/order.interface';
 
 const PendingOrdersPage: VFC = () => {
   const { data: orders = [], isFetching, isError } = useGetPendingOrdersQuery();
@@ -23,24 +25,24 @@ const PendingOrdersPage: VFC = () => {
   const renderUser = (user: User) => <UserLink user={user} />;
 
   const renderLocation = ({ city, street, home }: GeoLocation) => (
-    <div>{`${city.name}, ${street.name}, ${home}`}</div>
+      <div>{`${city.name}, ${street.name}, ${home}`}</div>
   );
 
   const renderAction = (id: number) => (
-    <ApproveAndDeclineActions
-      id={id}
-      onApprove={onApprove}
-      onDecline={onDecline}
-    />
+      <ApproveAndDeclineActions
+          id={id}
+          onApprove={onApprove}
+          onDecline={onDecline}
+      />
   );
 
   const onDecline = async (id: number) => {
     try {
       await declineOrder(id).unwrap();
       openNotification(
-        'Order Approval',
-        'Declined successfully!',
-        <CheckCircleOutlined />,
+          'Order Approval',
+          'Declined successfully!',
+          <CheckCircleOutlined />,
       );
     } catch (e) {
       message.error('Declining failed!');
@@ -51,9 +53,9 @@ const PendingOrdersPage: VFC = () => {
     try {
       await approveOrder(id).unwrap();
       openNotification(
-        'Order Approval',
-        'Approved successfully!',
-        <CheckCircleOutlined />,
+          'Order Approval',
+          'Approved successfully!',
+          <CheckCircleOutlined />,
       );
     } catch (e) {
       message.error('Approving failed!');
@@ -61,7 +63,7 @@ const PendingOrdersPage: VFC = () => {
   };
 
   const renderTime = (time: string) =>
-    formatDistanceToNow(new Date(time), { addSuffix: true });
+      formatDistanceToNow(new Date(time), { addSuffix: true });
 
   const columns = [
     {
@@ -104,34 +106,27 @@ const PendingOrdersPage: VFC = () => {
 
   const isTableLoading = isFetching || isApproving || isDeclining;
 
-  const sortedOrders = useMemo(
-    () =>
-      orders
-        .slice()
-        .sort(
-          (firstOrder, secondOrder) =>
-            new Date(secondOrder.updatedAt).getTime() -
-            new Date(firstOrder.updatedAt).getTime(),
-        ),
-    [orders],
+  const sortedOrders = useSortedByTime<Order>(
+      orders,
+      (order) => new Date(order.updatedAt),
   );
 
   return (
-    <MainLayout>
-      <Table
-        title={() => (
-          <Typography.Title level={2}>Pending Orders</Typography.Title>
-        )}
-        loading={isTableLoading || isError}
-        columns={columns}
-        dataSource={sortedOrders.map((order) => ({
-          ...order,
-          key: order.id,
-        }))}
-        pagination={{ pageSize: 8 }}
-      />
-      {isError && <NetworkErrorResult />}
-    </MainLayout>
+      <MainLayout>
+        <Table
+            title={() => (
+                <Typography.Title level={2}>Pending Orders</Typography.Title>
+            )}
+            loading={isTableLoading || isError}
+            columns={columns}
+            dataSource={sortedOrders.map((order) => ({
+              ...order,
+              key: order.id,
+            }))}
+            pagination={{ pageSize: 8 }}
+        />
+        {isError && <NetworkErrorResult />}
+      </MainLayout>
   );
 };
 

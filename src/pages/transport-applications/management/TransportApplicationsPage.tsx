@@ -1,7 +1,7 @@
 import React from 'react';
-import { MainLayout } from '../../../layouts/MainLayout';
+import { MainLayout } from '../../../features/layouts/MainLayout';
 import { Button, notification, Space, Table } from 'antd';
-import { User } from '../../users/managemnt/models/user.interface';
+import { User } from '../../../features/users/models/user.interface';
 import { TransportApplication } from './models/transport-application.interface';
 import {
   CheckCircleOutlined,
